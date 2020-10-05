@@ -1,7 +1,11 @@
-function compose(funcs) {
+function compose(...funcs) {
     return function (...args) {
         if (funcs.length === 0) return args;
         if (funcs.length === 1) return funcs[0](...args);
+
+        return funcs.reduce((n, fn) => {
+            return n instanceof Array ? fn(...n) : fn(n);
+        }, args);
     };
 }
 
